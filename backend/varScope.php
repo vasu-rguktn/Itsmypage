@@ -1,5 +1,5 @@
 <?php
-$v;
+
 $v=9;
 function varScope(){
    global $v;
@@ -11,12 +11,15 @@ function locScope(){
  global $v;
  $v = 10;
     echo $v;
+    global $n;
+ $n="neninthe";
 }
 locScope();
+echo"<br>", $n;
 
 
 function pagehits(){
-   static $hits=0;
+    static $hits=0;
     $hits++;
     echo $hits;
 }
