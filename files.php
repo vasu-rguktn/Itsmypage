@@ -15,7 +15,7 @@ fclose($fiOpn);
 // chusav ga ipdu write chey bro..!
 echo " chusav ga ipdu write chey bro..!";
 
-$fEscribo = fopen('title.txt', "a+");
+$fEscribo = fopen('title.txt', "w");
 echo "<br><br>";
 // echo $fEscribo;
 // fclose($fEscribo);
@@ -36,5 +36,10 @@ echo date("Y-m-d H:i:s", $LastAT);
 echo " <br> <br>adhe UNix TS ante - sare ne Birthday dhi chudu";
 echo "<hr>";
 echo strtotime("2000-04-25");
+echo "<hr>";
+//parsing directories chudhama?
+
+//echo scandir(".");
+print_r(scandir("."));
 
 ?>
