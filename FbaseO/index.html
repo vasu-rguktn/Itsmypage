@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Firebase Google Login</title>
+</head>
+<body>
+  <h2>FbaseO</h2>
+
+  <button id="loginBtn">Login with Google</button>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+
+  <div id="userInfo"></div>
+
+  <script type="module">
+    // Import Firebase SDKs (modular v9+ style)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+    import { 
+      getAuth, 
+      GoogleAuthProvider, 
+      signInWithPopup, 
+      signOut, 
+      onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+    // fbase config (replace with your own)
+    const firebaseConfig = {
+      apiKey: "AIzaSyAVG9X7QBt6inLOVDqZJ-1bZuOldNhqiSA",
+      authDomain: "fbaseoauth.firebaseapp.com",
+      projectId: "fbaseoauth",
+      appId: "1:451574405626:web:a64ddecb85f62f7297ac43"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const loginBtn = document.getElementById("loginBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const userInfo = document.getElementById("userInfo");
+
+    // Login
+    loginBtn.addEventListener("click", async () => {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (err) {
+        alert("Login failed: " + err.message);
+      }
+    });
+
+    // Logout
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+    });
+
+    // Listen to auth state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        userInfo.innerHTML = `
+          <p><strong>Name:</strong> ${user.displayName}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <img src="${user.photoURL}" width="120">
+        `;
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline-block";
+      } else {
+        userInfo.innerHTML = "<p>Not logged in</p>";
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
